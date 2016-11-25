@@ -1,7 +1,11 @@
-# Potato.coffee
+# Description:
+#   Tells jokes about a given subject
 #
-# <botname> tell me a <joke type> joke
-# e.g. : botato tell me a potato joke
+# Commands:
+#   hubot tell me a <subject> joke - Tell a randomly selected joke about a given subject
+#
+# Author:
+#   siddv
 
 module.exports = (robot) ->
 
@@ -44,19 +48,19 @@ module.exports = (robot) ->
 
   robot.respond /tell me a (.*) joke/i, (res) ->
 
-    jokeType = res.match[1]
+    subject = res.match[1]
 
-    if jokes[jokeType]
+    if jokes[subject]
 
-      jokesLength = jokes[jokeType].length
+      jokesLength = jokes[subject].length
       jokeIndex = Math.floor(Math.random() * jokesLength)
 
-      res.reply jokes[jokeType][jokeIndex].q
+      res.reply jokes[subject][jokeIndex].q
 
       setTimeout ( ->
-        res.send jokes[jokeType][jokeIndex].a
+        res.send jokes[subject][jokeIndex].a
       ), 1000
 
     else
 
-      res.reply "I don't know what a \"#{jokeType} joke\" is."
+      res.reply "I don't know any #{subject} jokes."
