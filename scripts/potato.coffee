@@ -2,51 +2,58 @@
 #   Tells jokes about a given subject
 #
 # Commands:
-#   hubot tell me a <subject> joke - Tell a randomly selected joke about a given subject
+#   hubot tell a <subject> joke - Tell a randomly selected joke about a given subject
 #
 # Author:
 #   siddv
 
 module.exports = (robot) ->
 
+  tellJokePart = (jokePart, i, res) ->
+
+    setTimeout ( ->
+      res.send jokePart
+    ), 1000 * i
+
   jokes = {
     potato: [
-      {
-        q: "What do you call a rotating potato?"
-        a: "A Rotato."
-      },
-      {
-        q: "What do you call a buoyant potato?"
-        a: "A Floatato."
-      },
-      {
-        q: "What do you call a philosophical potato?"
-        a: "Plato."
-      },
-      {
-        q: "What do you call a short potato?"
-        a: "A Lowtato."
-      },
-      {
-        q: "What do you call a wise potato?"
-        a: "A Knowtato."
-      },
-      {
-        q: "What do you call a potato wrapping up for warmth?"
-        a: "A Jacket Potato."
-      },
-      {
-        q: "What do you call a short potato?"
-        a: "A Lowtato."
-      },
-      {
-        q: "What do you call a wise potato?"
-        a: "A Knowtato."
-      },
+      [
+        "What do you call a rotating potato?",
+        "A Rotato."
+      ],
+      [
+        "What do you call a buoyant potato?",
+        "A Floatato."
+      ],
+      [
+        "What do you call a philosophical potato?",
+        "Plato."
+      ],
+      [
+        "What do you call a short potato?",
+        "A Lowtato."
+      ],
+      [
+        "What do you call a wise potato?",
+        "A Knowtato."
+      ],
+      [
+        "What do you call a potato wrapping up for warmth?",
+        "A Jacket Potato."
+      ],
+      [
+        "What do you call a short potato?",
+        "A Lowtato."
+      ],
+      [
+        "What do you call a wise potato?",
+        "A Knowtato."
+      ],
     ]
   }
 
-  robot.respond /tell me a (.*) joke/i, (res) ->
+
+  robot.respond /tell a (.*) joke/i, (res) ->
 
     subject = res.match[1]
 
@@ -54,12 +61,11 @@ module.exports = (robot) ->
 
       jokesLength = jokes[subject].length
       jokeIndex = Math.floor(Math.random() * jokesLength)
+      currentJoke = jokes[subject][jokeIndex]
 
-      res.reply jokes[subject][jokeIndex].q
+      for jokePart, i in currentJoke
 
-      setTimeout ( ->
-        res.send jokes[subject][jokeIndex].a
-      ), 1000
+        tellJokePart jokePart, i, res
 
     else
 
