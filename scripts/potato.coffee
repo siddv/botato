@@ -76,8 +76,6 @@ module.exports = (robot) ->
 
   robot.respond /save this (.*) joke: (.*)/, (res) ->
 
-    console.log 'tesmarch', res.match
-
     subject = res.match[1]
     joke = res.match[2].split ';'
 
