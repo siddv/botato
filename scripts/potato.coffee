@@ -3,6 +3,7 @@
 #
 # Commands:
 #   hubot tell a <subject> joke - Tell a randomly selected joke about a given subject
+#   hubot save this <subject> joke: <joke part 1>; <joke part 2>; ... <joke part N> - Save a joke about a given subject
 #
 # Author:
 #   siddv
@@ -14,6 +15,7 @@ module.exports = (robot) ->
     setTimeout ( ->
       res.send jokePart
     ), 1000 * i
+
 
   jokes = {
     potato: [
@@ -70,3 +72,16 @@ module.exports = (robot) ->
     else
 
       res.reply "I don't know any #{subject} jokes."
+
+
+  robot.respond /save this (.*) joke: (.*)/, (res) ->
+
+    console.log 'tesmarch', res.match
+
+    subject = res.match[1]
+    joke = res.match[2].split ';'
+
+    jokes[subject] = jokes[subject] || []
+    jokes[subject].push joke
+
+    # TODO: Save jokes array to hubot brain
